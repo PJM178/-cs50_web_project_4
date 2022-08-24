@@ -56,6 +56,9 @@ function posts() {
                 if (current_page > 1) {
                     document.querySelector('#previous-page').setAttribute('style', 'display: block;');
                 }
+                else {
+                    document.querySelector('#previous-page').setAttribute('style', 'display: none;');
+                }
             });
             page.append(link);
             ul.insertBefore(page, ul.getElementsByTagName("li")[i+1]);
