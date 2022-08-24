@@ -1,0 +1,18 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="all-posts-container">
+        <h2>Followed users' posts</h2>
+    {% for follow in followed_users %}
+        <div class="post-container">
+            <div style="font-weight: bold;"><a href="{% url 'profile' follow.username %}" style="color: inherit;">{{ follow.username }}</a></div>
+            <p></p>
+            <a href="#">Edit</a>
+            <div>{{ follow.content }}</div>
+            <div>{{ follow.time }}</div>
+            <div>{{ follow.likes }}</div>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}

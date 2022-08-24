@@ -1,0 +1,51 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+    <div class="all-posts-container">
+        <h2>All Posts</h2>
+    {% if user.is_authenticated %}
+        <div class="post-container">
+            <div>
+                <h3>New Post</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- <textarea id="new-post-text-area"></textarea> -->
+                    {{ form }}
+                    <div style="margin-top: -5px;">
+                        <button class="btn btn-primary" type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    {% endif %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="page-number">
+            <li class="page-item" id="previous-page"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item" id="next-page"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+        <div id="single-post-container">
+
+        </div>
+    <!-- This is currently done with JS -->
+    <!-- {% for post in posts %}
+        <div class="post-container">
+            <div style="font-weight: bold;"><a href="{% url 'profile' post.username %}" style="color: inherit;">{{ post.username }}</a></div>
+            <p></p>
+            <a href="#">Edit</a>
+            <div>{{ post.content }}</div>
+            <div>{{ post.time }}</div>
+            <div>{{ post.likes }}</div>
+        </div>
+    {% endfor %} -->
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'network/index.js' %}"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+{% endblock %}

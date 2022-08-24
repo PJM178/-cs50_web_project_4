@@ -1,0 +1,56 @@
+{% extends "network/layout.html" %}
+<!-- {% load static %} -->
+
+{% block title %}Profile - {{ username }}{% endblock %}
+
+{% block body %}
+    <div id="follower-box">
+        <div id="following">{{ total_following }} following</div>
+        <div id="followers">{{ total_followers }} followers</div>
+    </div>
+    {% if user.is_authenticated and request.user.username != username %}
+    <div style="margin-left: 10px;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.field.as_hidden }}
+            {% if not following_check %}
+            <button name="follow" style="border-radius: 5px; border-width: 0px; color: white; 
+            background-color: rgba(255, 31, 87, 0.2);" type="submit">Follow</button>
+            {% else %}
+            <button name="follow" style="border-radius: 5px; border-width: 0px; color: white; 
+            background-color: rgba(255, 31, 87, 1);" type="submit">Unfollow</button>
+            {% endif %}
+        </form>
+    </div>
+    {% endif %}
+    <div class="all-posts-container">
+        <h2>Posts</h2>
+    {% for post in posts %}
+        <div class="post-container">
+            <div style="font-weight: bold;"><a href="{% url 'profile' post.username %}" style="color: inherit;">{{ post.username }}</a></div>
+            <p></p>
+            <a href="#">Edit</a>
+            <div>{{ post.content }}</div>
+            <div>{{ post.time }}</div>
+            <div>{{ post.likes }}</div>
+        </div>
+    {% endfor %}
+    </div>
+    <!-- Modal -->
+    <!-- <div id="myModal" class="modal"> -->
+
+        <!-- Modal content -->
+        <!-- <div class="modal-content">
+            {% for following in following %}
+            {{ following.following }}
+            {% endfor %}
+            <span class="close">&times;</span>
+        </div> -->
+      
+    <!-- </div> -->
+    <!-- Modal end -->
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'network/profile.js' %}"></script>
+{% endblock %}
