@@ -52,7 +52,7 @@ function posts() {
                 document.querySelector("#single-post-container").innerHTML = "";
                 load_add_post(start_page, end_page)
                 current_page = i+1;
-                console.log(`This is page ${current_page}`);
+                // console.log(`This is page ${current_page}`);
                 if (current_page > 1) {
                     document.querySelector('#previous-page').setAttribute('style', 'display: block;');
                 }
@@ -70,33 +70,33 @@ function posts() {
 // Previous page
 function previous_page_event(page_ids) {
     //  troubleshooting with console
-    console.log(`This is page from function ${current_page}`);
-    console.log(`length of pages from function: ${page_ids.length}`);
+    // console.log(`This is page from function ${current_page}`);
+    // console.log(`length of pages from function: ${page_ids.length}`);
     if (current_page < page_ids.length && current_page != 1) {
         document.querySelector(`#${page_ids[current_page - 2]}`).click();
         // troubleshooting
-        console.log(`This is page from function if if ${current_page}`);
-        console.log(`length of pages from function if if: ${page_ids.length}`);
-        console.log(`this is current i: ${i}`);
+        // console.log(`This is page from function if if ${current_page}`);
+        // console.log(`length of pages from function if if: ${page_ids.length}`);
+        // console.log(`this is current i: ${i}`);
         if (current_page - 1 == 0) {
             document.querySelector('#previous-page').setAttribute('style', 'display: none;')
         }
     }
     else if (current_page == page_ids.length) {
         document.querySelector(`#${page_ids[current_page - 2]}`).click();
-        console.log(`This is page from function else if ${current_page}`);
+        // console.log(`This is page from function else if ${current_page}`);
     }
 }
 
 // Next page
 function next_page_event(page_ids) {
-    console.log(`This is page from function ${current_page}`);
-    console.log(`length of pages from function: ${page_ids.length}`);
+    // console.log(`This is page from function ${current_page}`);
+    // console.log(`length of pages from function: ${page_ids.length}`);
     if (current_page < page_ids.length) {
         document.querySelector(`#${page_ids[current_page]}`).click();
         // current_page = current_page + 1;
-        console.log(`This is page ${current_page}`);
-        console.log(`length of pages: ${page_ids.length}`);
+        // console.log(`This is page ${current_page}`);
+        // console.log(`length of pages: ${page_ids.length}`);
     }
 }
 
@@ -106,7 +106,7 @@ function load_add_post(start_point, end_point) {
     fetch(`/posts?start=${start}&end=${end}`)
     .then(response => response.json())
     .then(posts => {
-        console.log(posts);
+        // console.log(posts);
         posts.forEach(post => {
             add_post(post);
         });
