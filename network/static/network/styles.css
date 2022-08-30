@@ -38,6 +38,17 @@
     display: none;
 }
 
+.like-icon {
+    color: red;
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.like-container {
+    display: flex;
+    align-items: center;
+}
+
 /* #profile-link:hover {
     text-decoration: none;
 } */

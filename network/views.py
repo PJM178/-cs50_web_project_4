@@ -8,15 +8,13 @@ from datetime import datetime
 from django.core import serializers
 import time
 
-from .models import User, Posts, Followers
+from .models import User, Posts, Followers, Liked_Posts
 
 from .forms import CommentForm, FollowerForm
 
 
 def index(request):
     posts = Posts.objects.all().order_by("-time")
-    for post in posts:
-        print(post.time)
     if request.method == "POST":
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
@@ -159,3 +157,59 @@ def get_posts(request):
 def get_post_count(request):
     posts = Posts.objects.all()
     return HttpResponse(len(posts))
+
+def edit_post(request):
+    text_value = str(request.GET.get("start"))
+    post_id = str(request.GET.get("end"))
+    post = Posts.objects.get(pk = post_id)
+    post.content = text_value
+    post.save()
+    return HttpResponse()
+
+def like_post(request):
+    post_like = int(request.GET.get("like"))
+    post_id = str(request.GET.get("id"))
+    user_like = str(request.GET.get("user"))
+
+    # Update the models
+    try:
+        check_likes = Liked_Posts.objects.get(post_id = post_id, liker = user_like)
+    except Liked_Posts.DoesNotExist:
+        check_likes = None
+
+    if check_likes == None:
+        liked_post = Liked_Posts(post_id = post_id, liker = user_like)
+        liked_post.save()
+        post = Posts.objects.get(pk = post_id)
+        post.likes = post.likes + post_like
+        post.save()
+        heart = 1
+    else:
+        check_likes.delete()
+        post = Posts.objects.get(pk = post_id)
+        post.likes = post.likes - post_like
+        post.save()
+        heart = 0
+
+    return JsonResponse(heart, safe=False)
+
+def default_heart(request):
+    post_id = str(request.GET.get("id"))
+    user_like = str(request.GET.get("user"))
+
+    # Update the models
+    try:
+        check_likes = Liked_Posts.objects.get(post_id = post_id, liker = user_like)
+    except Liked_Posts.DoesNotExist:
+        check_likes = None
+
+    if check_likes == None:
+        heart = 1
+    else:
+        heart = 0
+    return JsonResponse(heart, safe=False)
+
+def get_single_post(request):
+    post_id = str(request.GET.get("post_id"))
+    post = Posts.objects.get(pk = post_id)
+    return JsonResponse(post.likes, safe=False)

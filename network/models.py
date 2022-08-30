@@ -31,3 +31,14 @@ class Followers(models.Model):
             "following": self.following.username,
             "follower": self.follower.username
         }
+
+class Liked_Posts(models.Model):
+    post_id = models.IntegerField()
+    liker = models.CharField(max_length=100)
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "post_id": self.post_id,
+            "liker": self.liker
+        }
