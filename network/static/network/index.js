@@ -150,7 +150,7 @@ function add_post(post, post_number) {
     let a = document.createElement('a');
     // Show edit button if the logged in user is the poster
     if (user_id === post.username) {
-        a.setAttribute('href', '#');
+        a.setAttribute('href', 'javascript:void(0);');
         a.innerHTML = "Edit";
         a.addEventListener('click', () => {
             let edit_content = document.querySelector(`#post-content-${post_number}`)

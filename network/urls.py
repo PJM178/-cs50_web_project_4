@@ -19,5 +19,7 @@ urlpatterns = [
     path("post-edit/", views.edit_post, name="edit_post"),
     path("post-likes/", views.like_post, name="like_post"),
     path("post-single/", views.get_single_post, name="get_single_post"),
-    path("post-heart/", views.default_heart, name="default_heart")
+    path("post-heart/", views.default_heart, name="default_heart"),
+    path("post-count-user/", views.get_user_post_count, name="get_user_post_count"),
+    path("posts-user/", views.get_user_posts, name="get_user_posts")
 ]

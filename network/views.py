@@ -154,6 +154,21 @@ def get_posts(request):
 
     return JsonResponse([post.serialize() for post in posts], safe = False)
 
+def get_user_posts(request):
+
+    # Get start and end points from request
+    start = int(request.GET.get("start") or 0)
+    end = int(request.GET.get("end") or (start + 9))
+    user = request.GET.get("user")
+
+    # Get the posts and filter by time - newer first
+    posts = Posts.objects.all().filter(username__username = user).order_by("-time")[start:end]
+
+    # Artificially delay speed of response - try this later
+    # time.sleep(1)
+
+    return JsonResponse([post.serialize() for post in posts], safe = False)
+
 def get_post_count(request):
     posts = Posts.objects.all()
     return HttpResponse(len(posts))
@@ -213,3 +228,8 @@ def get_single_post(request):
     post_id = str(request.GET.get("post_id"))
     post = Posts.objects.get(pk = post_id)
     return JsonResponse(post.likes, safe=False)
+
+def get_user_post_count(request):
+    user = request.GET.get("user")
+    posts = Posts.objects.all().filter(username__username = user)
+    return HttpResponse(len(posts))
